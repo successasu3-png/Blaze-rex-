@@ -1,5 +1,5 @@
 // In-memory storage for confessions (replace with database in production)
-let confessions = [];
+let confessions = [../modules/confessions];
 
 async function submitConfession(args, sender) {
   const confession = args.join(' ');
