@@ -5,7 +5,7 @@ async function submitConfession(args, sender) {
   const confession = args.join(' ');
   
   if (!confession) {
-    return '❌ Please provide a confession.
+    return 'Please provide a confession.
 
 Usage: *!confess <your confession>*';
   }
