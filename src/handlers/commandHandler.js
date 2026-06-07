@@ -11,6 +11,14 @@ const commands = {
   'truth': games.truthOrDare,
   'dare': games.truthOrDare,
   'riddle': games.riddle,
+  'wyr': games.wouldYouRather,
+  'trivia': games.trivia,
+  'nhie': games.neverHaveIEver,
+  'joke': games.jokeOfTheDay,
+  'quote': games.guessTheQuote,
+  'anime': games.guessAnimeCharacter,
+  '20q': games.twentyQuestions,
+  'word': games.wordAssociation,
   'confess': confessions.submitConfession,
   'confessions': confessions.getConfessions,
   'notify': notifications.sendNotification,
@@ -43,20 +51,28 @@ async function handleHelp() {
   return `
 🤖 *WhatsApp Bot Commands*
 
-*Games:*
-${PREFIX}truth - Play truth or dare
-${PREFIX}dare - Play truth or dare
+*🎮 Games:*
+${PREFIX}truth - Get a truth question
+${PREFIX}dare - Get a dare challenge
 ${PREFIX}riddle - Get a riddle to solve
-${PREFIX}game - Start a game
+${PREFIX}wyr - Would you rather question
+${PREFIX}trivia - Answer a trivia question
+${PREFIX}nhie - Never have I ever
+${PREFIX}joke - Get a funny joke
+${PREFIX}quote - Guess the quote
+${PREFIX}anime - Guess the anime character 🎌
+${PREFIX}20q - 20 questions game
+${PREFIX}word - Word association game
+${PREFIX}game - Start a random game
 
-*Confessions:*
+*📝 Confessions:*
 ${PREFIX}confess <message> - Submit a confession
 ${PREFIX}confessions - View all confessions
 
-*Notifications:*
+*📢 Notifications:*
 ${PREFIX}notify <message> - Send a notification
 
-*Group Management:*
+*🎛️ Group Management:*
 ${PREFIX}mute - Mute group
 ${PREFIX}unmute - Unmute group
 
