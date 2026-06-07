@@ -1,61 +1,16 @@
-// In-memory storage for notifications
-let notifications = [];
+// Notifications module
 
-async function sendNotification(args, sender) {
-  const message = args.join(' ');
-  
-  if (!message) {
-    return '❌ Please provide a notification message.
+const notifications = {
+  sendNotification: async (args, sender) => {
+    if (args.length === 0) {
+      return '🔔 Please provide a notification message. Example: !notify Everyone join the game!';
+    }
 
-Usage: *!notify <message>*';
+    const message = args.join(' ');
+    const notificationText = `🔔 *NOTIFICATION from ${sender}:*\n\n${message}\n\n_Sent at ${new Date().toLocaleTimeString()}_`;
+
+    return notificationText;
   }
-
-  const notification = {
-    id: Date.now(),
-    message: message,
-    sender: sender,
-    timestamp: new Date(),
-    read: false
-  };
-
-  notifications.push(notification);
-
-  return `📢 *Notification sent!*
-
-"${message}"
-
-✅ This notification has been logged and can be viewed later.`;
-}
-
-async function getNotifications(args, sender) {
-  if (notifications.length === 0) {
-    return '📭 No notifications yet.';
-  }
-
-  let message = '📬 *Recent Notifications:*
-
-';
-  
-  notifications.slice(-10).forEach((notif, index) => {
-    const time = new Date(notif.timestamp).toLocaleTimeString();
-    message += `${index + 1}. ${notif.message}
-   _(${time})_
-
-`;
-  });
-
-  return message;
-}
-
-async function clearNotifications(args, sender) {
-  const count = notifications.length;
-  notifications = [];
-  return `🗑️ Cleared ${count} notifications.`;
-}
-
-module.exports = {
-  sendNotification,
-  getNotifications,
-  clearNotifications,
-  getAllNotifications: () => notifications
 };
+
+module.exports = notifications;

@@ -1,61 +1,40 @@
-// In-memory storage for confessions (replace with database in production)
-let confessions = [];
+// Confessions module
 
-async function submitConfession(args, sender) {
-  const confession = args.join(' ');
-  
-  if (!confession) {
-    return 'Please provide a confession.
+const confessionsStore = [];
 
-Usage: *!confess <your confession>*';
+const confessions = {
+  submitConfession: async (args, sender) => {
+    if (args.length === 0) {
+      return '📝 Please provide your confession. Example: !confess I ate the last cookie';
+    }
+
+    const confession = args.join(' ');
+    const timestamp = new Date().toLocaleString();
+
+    confessionsStore.push({
+      text: confession,
+      sender: sender,
+      timestamp: timestamp
+    });
+
+    return `✅ Your confession has been submitted anonymously! 🤐`;
+  },
+
+  getConfessions: async (args, sender) => {
+    if (confessionsStore.length === 0) {
+      return '📋 No confessions yet. Be the first to !confess something!';
+    }
+
+    let confessionList = '📋 *Recent Confessions:*\n\n';
+    const recentConfessions = confessionsStore.slice(-5);
+
+    recentConfessions.forEach((conf, index) => {
+      confessionList += `${index + 1}. "${conf.text}"\n   _${conf.timestamp}_\n\n`;
+    });
+
+    confessionList += `Total confessions: ${confessionsStore.length}`;
+    return confessionList;
   }
-
-  const confessionObj = {
-    id: Date.now(),
-    text: confession,
-    sender: sender,
-    timestamp: new Date(),
-    anonymous: true
-  };
-
-  confessions.push(confessionObj);
-
-  return `✅ Your confession has been submitted anonymously!
-
-💬 "${confession}"
-
-Use *!confessions* to view all confessions.`;
-}
-
-async function getConfessions(args, sender) {
-  if (confessions.length === 0) {
-    return '📝 No confessions yet. Be the first to confess using *!confess <message>*';
-  }
-
-  let message = '📝 *All Confessions:*
-
-';
-  
-  confessions.slice(-10).forEach((conf, index) => {
-    message += `${index + 1}. "${conf.text}"
-`;
-  });
-
-  message += `
-_Total confessions: ${confessions.length}_`;
-  
-  return message;
-}
-
-async function clearConfessions(args, sender) {
-  const count = confessions.length;
-  confessions = [];
-  return `🗑️ Cleared ${count} confessions.`;
-}
-
-module.exports = {
-  submitConfession,
-  getConfessions,
-  clearConfessions,
-  getAllConfessions: () => confessions
 };
+
+module.exports = confessions;

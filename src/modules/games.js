@@ -1,314 +1,134 @@
-const truthQuestions = [
-  'What is your biggest fear?',
-  'What is your biggest regret?',
-  'What is the most embarrassing thing that has happened to you?',
-  'What would you do if nobody would ever know?',
-  'What is your deepest secret?',
-  'Would you rather have a horrible memory or bad eyesight?',
-  'What is the most terrible advice you have ever given?',
-  'What is something you do that you do not want anyone to know about?',
-  'What would you do if you could get away with it?',
-  'Have you ever lied to get out of trouble?',
-  'What is your biggest insecurity?',
-  'Have you ever broken someone\'s trust?',
-  'What is the most daring thing you\'ve done?',
-];
+// Games module
 
-const dares = [
-  'Send a message to a contact saying "I love you" with no explanation',
-  'Change your profile picture to something funny for a week',
-  'Text your crush and tell them a joke',
-  'Call someone and sing them a song',
-  'Post a selfie doing something silly',
-  'Share an embarrassing photo from your phone',
-  'Write and share a poem about your life',
-  'Do 20 pushups and take a video',
-  'Mimic someone in the group for 5 minutes',
-  'Speak in an accent for the next 10 messages',
-  'Do a funny dance and send a video',
-  'Go outside and compliment 3 random people',
-  'Create a TikTok video with a funny caption',
-];
+const games = {
+  startGame: async (args, sender) => {
+    return '🎮 Starting a random game... Try commands like !truth, !dare, !riddle, or !trivia';
+  },
 
-const riddles = [
-  {
-    question: 'What has hands but cannot clap?',
-    answer: 'A clock'
-  },
-  {
-    question: 'What gets wet while drying?',
-    answer: 'A towel'
-  },
-  {
-    question: 'What can travel around the world while staying in a corner?',
-    answer: 'A stamp'
-  },
-  {
-    question: 'What has a head and a tail but no body?',
-    answer: 'A coin'
-  },
-  {
-    question: 'What is seen in the middle of March and April that cannot be seen at the beginning or end of either month?',
-    answer: 'The letter R'
-  },
-  {
-    question: 'What has cities, but no houses; forests, but no trees; and water, but no fish?',
-    answer: 'A map'
-  },
-  {
-    question: 'What question can you never answer yes to?',
-    answer: 'Are you asleep?'
-  },
-  {
-    question: 'What can you catch but not throw?',
-    answer: 'A cold'
-  },
-];
+  truthOrDare: async (args, sender) => {
+    const truths = [
+      'What\'s your biggest fear?',
+      'Have you ever lied to your best friend?',
+      'What\'s something you\'ve never told anyone?',
+      'What would you do if nobody would judge you?',
+      'What\'s your guilty pleasure?'
+    ];
 
-const wouldYouRatherQuestions = [
-  'Would you rather be able to fly or be invisible?',
-  'Would you rather live without internet or without electricity?',
-  'Would you rather always be 10 minutes late or 20 minutes early?',
-  'Would you rather have the ability to speak all languages or play all instruments?',
-  'Would you rather always say everything on your mind or never speak again?',
-  'Would you rather be able to time travel to the past or the future?',
-  'Would you rather live without music or live without movies?',
-  'Would you rather have the power to stop time or fly?',
-  'Would you rather have unlimited money or unlimited time?',
-  'Would you rather be famous or be rich?',
-];
+    const dares = [
+      'Send a funny selfie to the group',
+      'Call someone and compliment them',
+      'Do 20 push-ups and send a video',
+      'Text someone you haven\'t spoken to in a year',
+      'Sing the national anthem out loud'
+    ];
 
-const triviaQuestions = [
-  {
-    question: 'What is the capital of France?',
-    options: ['Paris', 'Lyon', 'Marseille', 'Nice'],
-    answer: 'Paris'
-  },
-  {
-    question: 'What is 2 + 2?',
-    options: ['3', '4', '5', '6'],
-    answer: '4'
-  },
-  {
-    question: 'Which planet is closest to the sun?',
-    options: ['Venus', 'Mercury', 'Earth', 'Mars'],
-    answer: 'Mercury'
-  },
-  {
-    question: 'What is the largest ocean?',
-    options: ['Atlantic', 'Indian', 'Arctic', 'Pacific'],
-    answer: 'Pacific'
-  },
-  {
-    question: 'How many continents are there?',
-    options: ['5', '6', '7', '8'],
-    answer: '7'
-  },
-  {
-    question: 'What year did World War 2 end?',
-    options: ['1943', '1944', '1945', '1946'],
-    answer: '1945'
-  },
-];
+    const isTruth = Math.random() > 0.5;
+    const item = isTruth ? truths[Math.floor(Math.random() * truths.length)] : dares[Math.floor(Math.random() * dares.length)];
+    const label = isTruth ? '❓ Truth' : '🎯 Dare';
 
-const neverHaveIEverQuestions = [
-  'Never have I ever skipped class',
-  'Never have I ever cheated on a test',
-  'Never have I ever been in a fight',
-  'Never have I ever broken a bone',
-  'Never have I ever had a tattoo',
-  'Never have I ever lied to my parents',
-  'Never have I ever cried watching a movie',
-  'Never have I ever been in love',
-  'Never have I ever sung in public',
-  'Never have I ever danced like nobody is watching',
-];
+    return `${label}: ${item}`;
+  },
 
-const jokesList = [
-  'Why don\'t scientists trust atoms? Because they make up everything!',
-  'What do you call a fake noodle? An impasta!',
-  'Why did the scarecrow win an award? He was outstanding in his field!',
-  'What do you call a bear with no teeth? A gummy bear!',
-  'Why don\'t eggs tell jokes? They\'d crack each other up!',
-  'What did the ocean say to the beach? Nothing, it just waved!',
-  'Why did the coffee file a police report? It got mugged!',
-  'What do you call a dog magician? A Labracadabrador!',
-];
+  riddle: async (args, sender) => {
+    const riddles = [
+      'I have cities but no houses, forests but no trees. What am I? (Answer: A map)',
+      'The more you take, the more you leave behind. What am I? (Answer: Footsteps)',
+      'I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I? (Answer: An echo)',
+      'What has a head and a tail but no body? (Answer: A coin)',
+      'I am taken from a mine and shut up in a wooden case, from which I am never released, yet I am used by almost everyone. What am I? (Answer: Pencil lead)'
+    ];
 
-const quoteGuessGame = [
-  {
-    quote: 'May the Force be with you',
-    author: 'Star Wars'
+    const riddle = riddles[Math.floor(Math.random() * riddles.length)];
+    return `🤔 ${riddle}`;
   },
-  {
-    quote: 'To be or not to be',
-    author: 'Shakespeare'
-  },
-  {
-    quote: 'I\'ll be back',
-    author: 'Terminator'
-  },
-  {
-    quote: 'You can\'t handle the truth!',
-    author: 'A Few Good Men'
-  },
-  {
-    quote: 'Here\'s looking at you, kid',
-    author: 'Casablanca'
-  },
-];
 
-const animeCharacters = [
-  {
-    description: 'A spiky-haired protagonist with orange clothing from a ninja village',
-    character: 'Naruto Uzumaki',
-    anime: 'Naruto'
-  },
-  {
-    description: 'A black-haired boy with a large sword who fights demons',
-    character: 'Tanjiro Kamado',
-    anime: 'Demon Slayer'
-  },
-  {
-    description: 'A green-haired swordsman from a pirate crew with a bounty on his head',
-    character: 'Roronoa Zoro',
-    anime: 'One Piece'
-  },
-  {
-    description: 'A purple-haired girl who serves tea and loves her club',
-    character: 'Akane Minagawa',
-    anime: 'The Melancholy of Haruhi'
-  },
-  {
-    description: 'A tall blonde man who loves eating and has a big appetite',
-    character: 'Monkey D. Luffy',
-    anime: 'One Piece'
-  },
-  {
-    description: 'A cold, black-haired genius who studies death',
-    character: 'Light Yagami',
-    anime: 'Death Note'
-  },
-  {
-    description: 'A pink-haired girl who can turn into a titan',
-    character: 'Annie Leonhart',
-    anime: 'Attack on Titan'
-  },
-  {
-    description: 'A white-haired boy with heterochromia who is incredibly powerful',
-    character: 'Jujutsu Kaisen\'s Gojo Satoru',
-    anime: 'Jujutsu Kaisen'
-  },
-  {
-    description: 'A blonde-haired girl with a forehead seal',
-    character: 'Naruto\'s Hinata Hyuga',
-    anime: 'Naruto'
-  },
-  {
-    description: 'A silver-haired man with a katana who seeks powerful opponents',
-    character: 'Roronoa Zoro',
-    anime: 'One Piece'
-  },
-  {
-    description: 'A black-haired boy with a scarred eye and tactical mind',
-    character: 'Sasuke Uchiha',
-    anime: 'Naruto'
-  },
-  {
-    description: 'A red-haired girl with a big appetite and a love for cooking',
-    character: 'Erza Scarlet',
-    anime: 'Fairy Tail'
-  },
-];
+  wouldYouRather: async (args, sender) => {
+    const questions = [
+      'Would you rather: Have the ability to fly or be invisible?',
+      'Would you rather: Live in a world with no music or no movies?',
+      'Would you rather: Always be 10 minutes late or 20 minutes early?',
+      'Would you rather: Have free WiFi everywhere or free food everywhere?',
+      'Would you rather: Speak all languages fluently or play all instruments?'
+    ];
 
-function getRandomItem(array) {
-  return array[Math.floor(Math.random() * array.length)];
-}
+    const question = questions[Math.floor(Math.random() * questions.length)];
+    return `🤷 ${question}`;
+  },
 
-async function truthOrDare(args, sender) {
-  const choice = args[0]?.toLowerCase();
-  
-  if (choice === 'truth' || sender.includes('truth')) {
-    const question = getRandomItem(truthQuestions);
-    return `🎭 *Truth Question:*\n\n${question}`;
-  } else {
-    const dare = getRandomItem(dares);
-    return `🎯 *Dare:*\n\n${dare}`;
+  trivia: async (args, sender) => {
+    const questions = [
+      'What is the capital of France? (A: Paris)',
+      'What is the largest planet in our solar system? (A: Jupiter)',
+      'In what year did the Titanic sink? (A: 1912)',
+      'What is the smallest country in the world? (A: Vatican City)',
+      'How many sides does a hexagon have? (A: 6)'
+    ];
+
+    const question = questions[Math.floor(Math.random() * questions.length)];
+    return `🧠 Trivia: ${question}`;
+  },
+
+  neverHaveIEver: async (args, sender) => {
+    const statements = [
+      'Never have I ever... skipped a class/meeting',
+      'Never have I ever... told a lie to my parents',
+      'Never have I ever... danced in the rain',
+      'Never have I ever... cheated on a test',
+      'Never have I ever... sung in the shower'
+    ];
+
+    const statement = statements[Math.floor(Math.random() * statements.length)];
+    return `🙅 ${statement}`;
+  },
+
+  jokeOfTheDay: async (args, sender) => {
+    const jokes = [
+      'Why don\'t scientists trust atoms? Because they make up everything!',
+      'What do you call a fake noodle? An impasta!',
+      'Why did the scarecrow win an award? He was outstanding in his field!',
+      'What do you call a bear with no teeth? A gummy bear!',
+      'Why don\'t eggs tell jokes? They\'d crack each other up!'
+    ];
+
+    const joke = jokes[Math.floor(Math.random() * jokes.length)];
+    return `😂 ${joke}`;
+  },
+
+  guessTheQuote: async (args, sender) => {
+    const quotes = [
+      '"The only way to do great work is to love what you do." - Who said this?',
+      '"In the middle of difficulty lies opportunity." - Who said this?',
+      '"Life is what happens when you\'re busy making other plans." - Who said this?',
+      '"The future belongs to those who believe in the beauty of their dreams." - Who said this?',
+      '"It is during our darkest moments that we must focus to see the light." - Who said this?'
+    ];
+
+    const quote = quotes[Math.floor(Math.random() * quotes.length)];
+    return `💭 ${quote}`;
+  },
+
+  guessAnimeCharacter: async (args, sender) => {
+    const characters = [
+      'I\'m a protagonist from Death Note who has a notebook that can kill people. Who am I?',
+      'I\'m from My Hero Academia and I\'m known for my powerful quirk and spiky hair. Who am I?',
+      'I\'m from Naruto and I want to become Hokage. Who am I?',
+      'I\'m from Attack on Titan and I can turn into a Titan. Who am I?',
+      'I\'m from One Piece and I want to become King of the Pirates. Who am I?'
+    ];
+
+    const character = characters[Math.floor(Math.random() * characters.length)];
+    return `🎌 ${character}`;
+  },
+
+  twentyQuestions: async (args, sender) => {
+    return '🤔 Think of something (animal, person, or object). I\'ll try to guess it in 20 questions! (Feature coming soon)';
+  },
+
+  wordAssociation: async (args, sender) => {
+    const words = ['Blue', 'Happy', 'Ocean', 'Music', 'Dream', 'Fire', 'Mountain', 'River', 'Sunset', 'Thunder'];
+    const word = words[Math.floor(Math.random() * words.length)];
+    return `🔤 Word Association: I say "${word}", you reply with the first word that comes to mind!`;
   }
-}
-
-async function riddle(args, sender) {
-  const riddleData = getRandomItem(riddles);
-  return `🧩 *Riddle:*\n\n${riddleData.question}\n\n_(Reply with your answer)_`;
-}
-
-async function wouldYouRather(args, sender) {
-  const question = getRandomItem(wouldYouRatherQuestions);
-  return `🤔 *Would You Rather:*\n\n${question}`;
-}
-
-async function trivia(args, sender) {
-  const triviaQ = getRandomItem(triviaQuestions);
-  let options = triviaQ.options.map((opt, idx) => `${idx + 1}. ${opt}`).join('\n');
-  return `🧠 *Trivia Question:*\n\n${triviaQ.question}\n\n${options}\n\n_(Reply with the number of your answer)_`;
-}
-
-async function neverHaveIEver(args, sender) {
-  const question = getRandomItem(neverHaveIEverQuestions);
-  return `🍷 *Never Have I Ever:*\n\n${question}\n\n_(If you have done it, react with 🥃)_`;
-}
-
-async function jokeOfTheDay(args, sender) {
-  const joke = getRandomItem(jokesList);
-  return `😂 *Joke Time:*\n\n${joke}`;
-}
-
-async function guessTheQuote(args, sender) {
-  const quoteData = getRandomItem(quoteGuessGame);
-  return `🎬 *Guess the Quote:*\n\n"${quoteData.quote}"\n\n_(Try to guess who said this or what movie/show it's from)_`;
-}
-
-async function guessAnimeCharacter(args, sender) {
-  const charData = getRandomItem(animeCharacters);
-  return `🎌 *Guess The Anime Character:*\n\n${charData.description}\n\n💡 *Hint:* From "${charData.anime}"\n\n_(Reply with the character's name)_`;
-}
-
-async function twentyQuestions(args, sender) {
-  return `❓ *20 Questions Game:*\n\nI'm thinking of something... Ask me yes/no questions to figure out what it is! You have 20 questions.\n\n_(Type your question as: !ask <your question>)_`;
-}
-
-async function wordAssociation(args, sender) {
-  const startWords = ['Gaming', 'Pizza', 'Adventure', 'Dream', 'Coffee', 'Music', 'Love', 'Art'];
-  const startWord = getRandomItem(startWords);
-  return `🔗 *Word Association Game:*\n\nStarting word: *${startWord}*\n\nReply with a word that's associated with it. I'll reply with a word associated with yours, and we keep going!\n\n_(Your turn!)_`;
-}
-
-async function startGame(args, sender) {
-  const games = [
-    'Truth or Dare',
-    'Riddle',
-    'Would You Rather',
-    'Trivia',
-    'Never Have I Ever',
-    'Joke of the Day',
-    'Guess the Quote',
-    'Guess the Anime Character',
-    'Word Association'
-  ];
-  const randomGame = getRandomItem(games);
-  return `🎮 *Starting Game: ${randomGame}*\n\nUse ${process.env.BOT_PREFIX || '!'}truth, ${process.env.BOT_PREFIX || '!'}dare, ${process.env.BOT_PREFIX || '!'}riddle, ${process.env.BOT_PREFIX || '!'}wyr, ${process.env.BOT_PREFIX || '!'}trivia, ${process.env.BOT_PREFIX || '!'}nhie, ${process.env.BOT_PREFIX || '!'}joke, ${process.env.BOT_PREFIX || '!'}quote, or ${process.env.BOT_PREFIX || '!'}anime to play!`;
-}
-
-module.exports = {
-  truthOrDare,
-  riddle,
-  wouldYouRather,
-  trivia,
-  neverHaveIEver,
-  jokeOfTheDay,
-  guessTheQuote,
-  guessAnimeCharacter,
-  twentyQuestions,
-  wordAssociation,
-  startGame
 };
+
+module.exports = games;
